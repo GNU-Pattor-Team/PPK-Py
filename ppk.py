@@ -10,7 +10,7 @@ import os
 import time
 import argparse
 
-Index0Url = str("")
+Index0Url = str("hhttps://raw.githubusercontent.com/GNU-Pattor-Team/PPK-Sources-Main/master/main.index")
 Index1Url = str("")
 
 ap = argparse.ArgumentParser()
@@ -36,21 +36,22 @@ def printHelp():
 def printTerms():
 	print("\nPPK (Pattor Packager) | A gateway to everything pirate on GNU/Linux.\nCopyright (C) 2020, GNU/Pattor Team\n\n<web>\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License,\nor (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\nSee the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see <https://www.gnu.org/licenses/>.\n")
 
-def ppkList():
+def ppkFetch():
+	os.system("mkdir /opt/ppk/lists/ && mkdir /opt/ppk/packages/")
 	print("\nFetching latest sources index...")
-	os.system("" + args.remove)
+	os.system("wget --show-progress -O /opt/ppk/lists/main.index " + Index0Url)
+
+def ppkList():
+	ppkFetch()
 
 def ppkAbout():
-	print("\nFetching latest sources index...")
-	os.system("" + args.remove)
+	ppkFetch()
 
 def ppkDownload():
-	print("\nFetching latest sources index...")
-	os.system("" + args.remove)
+	ppkFetch()
 
 def ppkInstall():
-	print("\nFetching latest sources index...")
-	os.system("" + args.remove)
+	ppkFetch()
 	ppkDownload()
 
 def ppkRemove():
