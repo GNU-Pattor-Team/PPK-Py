@@ -16,6 +16,8 @@ Index1Url = str("")
 ap = argparse.ArgumentParser()
 ap.add_argument("-t", "--terms",
 	help="(--terms [dummy]) - Shows the Terms of the program's license.")
+ap.add_argument("-n", "--nofetch",
+	help="(--nofetch true) - Skips ReFetching of sources lists.")
 ap.add_argument("-l", "--list",
 	help="(--list [package name]) - Lists the desired package(s).")
 ap.add_argument("-a", "--about",
@@ -31,10 +33,10 @@ ap.add_argument("-p", "--purge",
 args = ap.parse_args()
 
 def printHelp():
-	print("\nPPK (Pattor Packager) | Copyright (C) 2020, GNU/Pattor Team\nThis program comes with ABSOLUTELY NO WARRANTY;\nThis is free software, and you are welcome to redistribute it\nunder certain conditions; type 'show t' for details.\n")
+	print("\n\033[95mPPK (Pattor Packager) | Copyright (C) 2020, GNU/Pattor Team\nThis program comes with ABSOLUTELY NO WARRANTY;\nThis is free software, and you are welcome to redistribute it\nunder certain conditions; type 'show t' for details.\n\033[0m")
 
 def printTerms():
-	print("\nPPK (Pattor Packager) | A gateway to everything pirate on GNU/Linux.\nCopyright (C) 2020, GNU/Pattor Team\n\n<web>\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License,\nor (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\nSee the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see <https://www.gnu.org/licenses/>.\n")
+	print("\n\033[95mPPK (Pattor Packager) | A gateway to everything pirate on GNU/Linux.\nCopyright (C) 2020, GNU/Pattor Team\nRelies on DPKG and WGET to work.\n\n<web>\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License,\nor (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\nSee the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see <https://www.gnu.org/licenses/>.\n\033[0m")
 
 def search_string_in_file(text_file_name, string_to_search):
 	current_index = 0
@@ -48,20 +50,25 @@ def search_string_in_file(text_file_name, string_to_search):
 	return list_of_results
 
 def ppkFetch():
-	os.system("mkdir /opt/ppk/lists/ && mkdir /opt/ppk/packages/")
-	print("\nFetching latest sources index...")
-	os.system("wget --show-progress -O /opt/ppk/lists/main.index " + Index0Url)
-	text_file_name = str("/opt/ppk/lists/main.index")
-	line_number = 0
-	with open(text_file_name) as f:
-		for line in f:
-			os.system("wget --show-progress -O /opt/ppk/lists/sources.index" + str(line_number) + " " + line)
-			line_number += 1
-	f.close()
-	print("\nDone fetching sources.")
+	if (str(args.nofetch) != "true"):
+		os.system("mkdir /opt/ppk/lists/ && mkdir /opt/ppk/packages/")
+		print("\n\033[94mFetching latest sources index...\n\033[0m")
+		time.sleep(1)
+		os.system("wget -q --show-progress -O /opt/ppk/lists/main.index " + Index0Url)
+		text_file_name = str("/opt/ppk/lists/main.index")
+		line_number = 0
+		with open(text_file_name) as f:
+			for line in f:
+				os.system("wget -q --show-progress -O /opt/ppk/lists/sources.index" + str(line_number) + " " + line)
+				line_number += 1
+		f.close()
+		print("\n\033[94mDone fetching sources.\n\033[0m")
 
 def ppkList():
 	ppkFetch()
+	matched_lines = search_string_in_file("/opt/ppk/lists/sources.index0", args.list)
+	for elem in matched_lines:
+		print("Line Number = ", elem[0], " :: Line = ", elem[1])
 
 def ppkAbout():
 	ppkFetch()
@@ -78,6 +85,10 @@ def ppkRemove():
 
 def ppkPurge():
 	os.system("dpkg --purge " + args.purge)
+
+if (os.getuid() != 0):
+	print("\n\033[93m\033[1mNOTE: PPK must run with admin privileges.\nEither call it through sudo, or start it with the root user using su.\n\033[0m")
+	exit()
 
 if (str(args.terms) != "None"):
 	printTerms()
@@ -100,3 +111,4 @@ if (str(args.remove) != "None"):
 if (str(args.purge) != "None"):
 	ppkPurge()
 
+print("\n\033[94mProgram finished.\n\033[0m")
