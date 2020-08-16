@@ -38,6 +38,10 @@ def printHelp():
 def printTerms():
 	print("\n\033[95mPPK (Pattor Packager) | A gateway to everything pirate on GNU/Linux.\nCopyright (C) 2020, GNU/Pattor Team\nRelies on DPKG and WGET to work.\n\n<web>\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License,\nor (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\nSee the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see <https://www.gnu.org/licenses/>.\n\033[0m")
 
+
+def printPattor():
+         print("\n\033[95mPPK have the Pattor Super Powers\n\033[0m")
+
 def search_string_in_file(text_file_name, string_to_search):
 	current_index = 0
 	line_number = 0
