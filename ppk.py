@@ -33,7 +33,7 @@ ap.add_argument("-p", "--purge",
 args = ap.parse_args()
 
 def printHelp():
-	print("\n\033[95mPPK (Pattor Packager) | Copyright (C) 2020, GNU/Pattor Team\nThis program comes with ABSOLUTELY NO WARRANTY;\nThis is free software, and you are welcome to redistribute it\nunder certain conditions; type 'show t' for details.\n\033[0m")
+	print("\n\033[95mPPK (Pattor Packager) | Copyright (C) 2020, GNU/Pattor Team\nThis program comes with ABSOLUTELY NO WARRANTY;\nThis is free software, and you are welcome to redistribute it\nunder certain conditions; type 'show t' for details. | PPK have the Parrot Super Powers\n\033[0m")
 
 def printTerms():
 	print("\n\033[95mPPK (Pattor Packager) | A gateway to everything pirate on GNU/Linux.\nCopyright (C) 2020, GNU/Pattor Team\nRelies on DPKG and WGET to work.\n\n<web>\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License,\nor (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\nSee the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see <https://www.gnu.org/licenses/>.\n\033[0m")
